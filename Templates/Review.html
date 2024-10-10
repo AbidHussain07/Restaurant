@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block feedback %}active{% endblock feedback %}
+
+{% block class %}
+class = "sub_page"
+{% endblock class %}
+
+{% block main %}
+  <section class="book_section layout_padding">
+    <div class="container">
+      <div class="heading_container">
+        <h2>
+          How Do You Feel. Please give Feedback
+        </h2>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form_container">
+            <form method="POST">
+              {% csrf_token %}
+              <div>
+                <input type="text" class="form-control" name = "name" placeholder="Your Name" required />
+              </div>
+              <div>
+                <textarea rows="5" name="review" class="col-12 mb-3" placeholder="FeedBack Message" required ></textarea>
+              </div>
+              <div>
+              <input class="col-3" type="number" id="rating" name="rating" min="1" max="5" value="1">
+              </div>
+              <div class="btn_box">
+                <button class="btn bsb-btn-xl btn-outline-secondary" type="submit">Submit</button>
+              </div>
+            </form>
+          </div>
+        </div>
+    </div>
+  </section>
+
+
+<!-- client section -->
+  <section class="client_section layout_padding-bottom">
+    <div class="container">
+      <div class="heading_container heading_center psudo_white_primary mb_45">
+        <h2>
+          What Our Customers Says!
+        </h2>
+      </div>
+      <div class="carousel-wrap row ">
+        <div class="owl-carousel client_owl-carousel">
+            {%for i in review%}
+          <div class="item">
+            <div class="box">
+              <div class="detail-box">
+                <h6>
+                    {{i.username}}
+                  </h6>
+                <p>
+                <b>{{i.rating}}</b> out of <b>5</b>
+                <p>
+                 {{i.description | truncatechars:70}} 
+                </p>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- end client section -->
+  {% endblock main %}
